@@ -83,6 +83,7 @@ const Sidebar = () => {
     } catch (error) {
       console.error("Error occurred", error)
     }
+    document.getElementById('my_modal_3').close();
   }
 
   return (
