@@ -112,7 +112,7 @@ const Sidebar = () => {
                 </button>
               ))}
             </nav>
-            <div className={`mt-8 ${location.pathname === "/docs" ? "border-t border-base-content" : null}`}>
+            <div className={`${location.pathname === "/docs" ? "mt-8 border-t border-base-content" : "hidden"}`}>
               <nav className="flex flex-col gap-4 mt-8 justify-start ">
                 {location.pathname === "/docs" && featureSidebar1.map((item) => (
                   <button
@@ -126,7 +126,7 @@ const Sidebar = () => {
                 ))}
               </nav>
             </div>
-            <div className={`mt-8 ${location.pathname === "/doc" ? "border-t border-base-content" : null}`}>
+            <div className={`${location.pathname === "/doc" ? "mt-8 border-t border-base-content" : "hidden"}`}>
               <nav className="flex flex-col gap-4 mt-8 justify-start ">
                 {location.pathname === "/doc" && featureSidebar2.map((item) => (
                   <button
@@ -140,7 +140,7 @@ const Sidebar = () => {
                 ))}
               </nav>
             </div>
-            <div className={`mt-8 ${location.pathname === "/profile" ? "border-t border-base-content" : null}`}>
+            <div className={`${location.pathname === "/profile" ? "mt-8 border-t border-base-content" : "hidden"}`}>
               <nav className="flex flex-col gap-4 mt-8 justify-start ">
                 {location.pathname === "/profile" && featureSidebar3.map((item) => (
                   <button
