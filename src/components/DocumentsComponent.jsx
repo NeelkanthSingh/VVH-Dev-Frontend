@@ -33,7 +33,7 @@ const DocumentComponent = () => {
         };
 
         fetchData();
-    }, [auth])
+    }, [auth, setAuth, navigate, location])
 
    const filteredDocuments = documents.filter(doc =>
     doc.doc_name.toLowerCase().includes(search.toLowerCase())
