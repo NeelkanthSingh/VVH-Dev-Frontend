@@ -7,7 +7,7 @@ import axios from "../api/axios"
 const LogoutComponent = () => {
 
     const navigate = useNavigate();
-    const [setAuth] = useSetRecoilState(authAtom);
+    const setAuth = useSetRecoilState(authAtom);
 
     useEffect(() => {
         const logout = async() => {
