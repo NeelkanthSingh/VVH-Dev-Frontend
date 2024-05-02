@@ -10,6 +10,7 @@ const DocumentComponent = () => {
     const [auth, setAuth] = useRecoilState(authAtom);
     const [documents, setDocuments] = useState([]);
     const [search, setSearch] = useState('');
+    const [uploadStatus, setUploadStatus] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,7 +34,34 @@ const DocumentComponent = () => {
         };
 
         fetchData();
-    }, [auth, setAuth, navigate, location])
+    }, [auth, setAuth, navigate, location, uploadStatus])
+
+    useEffect(() => {
+        const interval = setInterval(async () => {
+        const controller = new AbortController();
+            try {         
+                const response = await axios.get('/docs/getUploadStatus', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${auth?.accessToken}`
+                        },
+                    signal: controller.signal           
+                    });
+                setUploadStatus(response.data.status);
+            } catch (error) {
+                console.error(error);
+                if (error.response && error.response.status === 403){
+                    console.error(error);
+                    setAuth({});
+                    navigate("/signin", { state: { from: location } });
+                }
+            }
+            setTimeout(() => {
+                controller.abort();
+            }, 2000);
+        }, 2000);
+        return () => clearInterval(interval);
+    });
 
    const filteredDocuments = documents.filter(doc =>
     doc.doc_name.toLowerCase().includes(search.toLowerCase())
@@ -65,11 +93,14 @@ const DocumentComponent = () => {
                     </svg>
                 </label>
 
-                <div className="stats w-48 h-24 flex items-center">
-                    <div className="stat">
-                        <div className="stat-title text-blue-700">Total documents</div>
-                        <div className="stat-value text-blue-700">{documents.length}</div>
+                <div className='flex justify-items-end'>
+                    <div className="stats w-48 h-24 flex items-center">
+                        <div className="stat">
+                            <div className="stat-title text-blue-700">Total documents</div>
+                            <div className="stat-value text-blue-700">{documents.length}</div>
+                        </div>
                     </div>
+                    {uploadStatus ? <span className="loading loading-ball loading-md text-accent"></span> : null}
                 </div>
             </div>
 
