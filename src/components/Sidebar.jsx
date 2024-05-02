@@ -2,14 +2,14 @@ import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { SvgHome, SvgDocuments, SvgUser, SvgCopy, SvgUpdate, SvgRename, SvgDelete, SvgDeleteUser, SvgRenameUser } from "./Svgcomp";
 import { IconFolderPlus, IconLogout } from "@tabler/icons-react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { authAtom } from "../store/atoms/authAtom";
 import { sidebarAtom } from "../store/atoms/sidebarAtom";
 import { IconMenu2 } from "@tabler/icons-react";
 import axios from "../api/axios";
 
 const Sidebar = () => {
-  const [auth, setAuth] = useRecoilState(authAtom);
+  const [auth] = useRecoilState(authAtom);
   const [isSidebarOpen, setIsSidebarOpen] = useRecoilState(sidebarAtom);
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
@@ -81,7 +81,7 @@ const Sidebar = () => {
       });
       console.log(response);
     } catch (error) {
-      console.error("Error occurred", err)
+      console.error("Error occurred", error)
     }
   }
 

@@ -1,6 +1,5 @@
-import React from 'react'
 import { authAtom } from '../store/atoms/authAtom'
-import { useRecoilState } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from "../api/axios"
@@ -8,7 +7,7 @@ import axios from "../api/axios"
 const LogoutComponent = () => {
 
     const navigate = useNavigate();
-    const [auth, setAuth] = useRecoilState(authAtom);
+    const [setAuth] = useSetRecoilState(authAtom);
 
     useEffect(() => {
         const logout = async() => {
@@ -28,7 +27,7 @@ const LogoutComponent = () => {
             navigate("/", { replace: true });
         }
         logout();
-    }, []);
+    }, [navigate, setAuth]);
 
   return (
     <></>

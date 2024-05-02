@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import "../../index.css"
 
 const OverflowWrapperCard = ({ children }) => {

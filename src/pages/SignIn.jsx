@@ -34,7 +34,7 @@ const SignIn = () => {
       navigate(from);
     }
 
-  }, [auth, refresh]);
+  }, [auth, refresh, from, navigate]);
 
   const login = () => {
     window.location.href = "http://localhost:3000/auth/google";
@@ -64,13 +64,13 @@ const SignIn = () => {
             <br />
             <div className="text-xs mb-1">
               <p>
-                Click 'Sign In' to agree to VersionVaultHub's{" "}
+                Click &apos;Sign In&apos; to agree to VersionVaultHub&apos;s{" "}
                 <span className="underline">
                   <a href="/">Terms of Service</a>
                 </span>
               </p>
               <p>
-                and acknowledge that VersionVaultHub's{" "}
+                and acknowledge that VersionVaultHub&apos;s{" "}
                 <span className="underline">
                   <a href="/">Privacy Policy</a>
                 </span>{" "}
