@@ -14,7 +14,6 @@ const DocumentComponent = () => {
     const uploading = useRecoilValue(uploadingAtom);
 
     useEffect(() => {
-        console.log('fetching data');
         const fetchData = async () => {
             try {
                 const response = await axios.get('/docs/getAll', {
