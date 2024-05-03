@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { authAtom } from '../store/atoms/authAtom';
 import axios from '../api/axios';
 import { useNavigate, useLocation } from 'react-router-dom';
+import uploadingAtom from '../store/atoms/uploadingAtom';
 
 const DocumentComponent = () => {
     const navigate = useNavigate();
@@ -10,9 +11,10 @@ const DocumentComponent = () => {
     const [auth, setAuth] = useRecoilState(authAtom);
     const [documents, setDocuments] = useState([]);
     const [search, setSearch] = useState('');
-    const [uploadStatus, setUploadStatus] = useState(false);
+    const uploading = useRecoilValue(uploadingAtom);
 
     useEffect(() => {
+        console.log('fetching data');
         const fetchData = async () => {
             try {
                 const response = await axios.get('/docs/getAll', {
@@ -34,34 +36,7 @@ const DocumentComponent = () => {
         };
 
         fetchData();
-    }, [auth, setAuth, navigate, location, uploadStatus])
-
-    useEffect(() => {
-        const interval = setInterval(async () => {
-        const controller = new AbortController();
-            try {         
-                const response = await axios.get('/docs/getUploadStatus', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${auth?.accessToken}`
-                        },
-                    signal: controller.signal           
-                    });
-                setUploadStatus(response.data.status);
-            } catch (error) {
-                console.error(error);
-                if (error.response && error.response.status === 403){
-                    console.error(error);
-                    setAuth({});
-                    navigate("/signin", { state: { from: location } });
-                }
-            }
-            setTimeout(() => {
-                controller.abort();
-            }, 2000);
-        }, 2000);
-        return () => clearInterval(interval);
-    });
+    }, [auth, setAuth, navigate, location, uploading])
 
    const filteredDocuments = documents.filter(doc =>
     doc.doc_name.toLowerCase().includes(search.toLowerCase())
@@ -100,7 +75,7 @@ const DocumentComponent = () => {
                             <div className="stat-value text-blue-700">{documents.length}</div>
                         </div>
                     </div>
-                    {uploadStatus ? <span className="loading loading-ball loading-md text-accent"></span> : null}
+                    {uploading ? <span className="loading loading-ball loading-md text-accent"></span> : null}
                 </div>
             </div>
 

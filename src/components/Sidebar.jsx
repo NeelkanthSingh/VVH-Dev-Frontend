@@ -7,12 +7,14 @@ import { authAtom } from "../store/atoms/authAtom";
 import { sidebarAtom } from "../store/atoms/sidebarAtom";
 import { IconMenu2 } from "@tabler/icons-react";
 import axios from "../api/axios";
+import uploadingAtom from "../store/atoms/uploadingAtom";
 
 const Sidebar = () => {
   const [auth] = useRecoilState(authAtom);
   const [isSidebarOpen, setIsSidebarOpen] = useRecoilState(sidebarAtom);
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
+  const [uploading, setUploading] = useRecoilState(uploadingAtom);
   const fileInput = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -72,18 +74,26 @@ const Sidebar = () => {
     formData.append("name", fileName);
     formData.append("file", file);
     console.log(auth?.accessToken);
-    try {
-      const response = await axios.post('/upload/file', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${auth?.accessToken}`
-        }
-      });
-      console.log(response);
-    } catch (error) {
-      console.error("Error occurred", error)
-    }
     document.getElementById('my_modal_3').close();
+    setUploading(true);
+
+    const response = axios.post('/upload/file', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${auth?.accessToken}`
+      },
+      timeout: 60000
+    }).catch((error) => {
+      if(error.code === 'ECONNABORTED') {
+        alert('Server Timeout. Please try again later.');
+      } else {
+        alert('Server Error. Please try again later.');
+      }
+      setUploading(false);
+    }).then((response) => {
+      console.log(response);
+      setUploading(false);
+    });
   }
 
   return (
