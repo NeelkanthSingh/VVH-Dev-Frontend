@@ -41,6 +41,11 @@ const DocumentComponent = () => {
     doc.doc_name.toLowerCase().includes(search.toLowerCase())
 );
 
+    function onClickHandler(doc_name) {
+        const doc = documents.find(doc => doc.doc_name === doc_name);
+        window.open(doc.doc_url, '_blank');
+    }
+
     return (
         <div className="p-2">
             <div className="flex items-center justify-between mb-8 border-shadow-300 mr-[52px] py-2 px-8 shadow-md shadow-primary">
@@ -78,11 +83,19 @@ const DocumentComponent = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-5 gap-4">
+            <div className="grid grid-cols-4 gap-4">
                 {filteredDocuments.map((doc, index) => (
             <div key={index} className="flex items-center justify-between mb-4">
                 <div className='flex items-center'>
-                    <button className="btn btn-lg btn-outline w-44">{doc.doc_name}</button>
+                    <div className="card w-[324px] bg-success">
+                        <div className="card-body items-center text-center">
+                            <h2 className="card-title">{doc.doc_name}</h2>
+                            <div className="card-actions justify-end">
+                                <button className="btn btn-primary" onClick={() => onClickHandler(doc.doc_name)}>Open</button>
+                                <button className="btn btn-accent">About</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         ))}
