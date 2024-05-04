@@ -87,11 +87,11 @@ const DocumentComponent = () => {
                 {filteredDocuments.map((doc, index) => (
             <div key={index} className="flex items-center justify-between mb-4">
                 <div className='flex items-center'>
-                    <div className="card w-[324px] bg-success">
+                    <div className="card w-[324px] bg-primary">
                         <div className="card-body items-center text-center">
                             <h2 className="card-title">{doc.doc_name}</h2>
                             <div className="card-actions justify-end">
-                                <button className="btn btn-primary" onClick={() => onClickHandler(doc.doc_name)}>Open</button>
+                                <button className="btn btn-secondary" onClick={() => onClickHandler(doc.doc_name)}>Open</button>
                                 <button className="btn btn-accent">About</button>
                             </div>
                         </div>
