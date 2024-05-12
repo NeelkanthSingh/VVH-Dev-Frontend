@@ -9,34 +9,16 @@ const FileRoute = () => {
 
     useEffect(() => {
     async function fetchData() {
-        const secret = import.meta.env.VITE_SECRET_KEY;
-        const secretKey = new TextEncoder().encode(secret);
-        const userData = {
-            username,
-            doc
-        };
-
-        const alg = 'HS256'
-
-        const jwt = await new jose.SignJWT(userData)
-       .setProtectedHeader({ alg })
-       .setIssuedAt()
-       .setIssuer('versionvaulthub.com:issuer')
-       .setAudience('versionvaulthub.com:audience')
-       .setExpirationTime('10s')
-       .sign(secretKey)
-
-        const jwt_token = jwt;
-
-        console.log(jwt_token);
-
         const response = await axios.get('/docs/getOne', {
+                    params: {
+                        username: username,
+                        doc_name: doc
+                    },
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + jwt_token,
                     }
                 });
-        console.log(response.data);
+
         window.location.replace(response.data.url);
     }
 
