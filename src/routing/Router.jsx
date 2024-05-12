@@ -4,6 +4,8 @@ import PrivateRoute from "./PrivateRoutes";
 import Homepage from "../pages/Homepage";
 import Documents from "../pages/Documents";
 import LogoutComponent from "../components/Logout"
+import Error404 from "../pages/404Error";
+import FileRoute from "../pages/FileRoute";
 
 const Router = () => {
   return (
@@ -13,6 +15,8 @@ const Router = () => {
       <Route path="/dashboard" element={<PrivateRoute> <Homepage /> </PrivateRoute>}/>
       <Route path="/docs" element={<PrivateRoute> <Documents /> </PrivateRoute>}/>
       <Route path="/logout" element={<LogoutComponent />}/>
+      <Route path="/file/:username/:doc" element={<FileRoute />} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   );
 };
