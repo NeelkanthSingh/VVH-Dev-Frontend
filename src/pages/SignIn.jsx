@@ -47,7 +47,7 @@ const SignIn = () => {
       ) : (
         <OverflowWrapperCard>
           <div className="text-center px-10 pb-5 pt-10">
-            <div className="text-3xl mb-7 text-gray-900">Sign In</div>
+            <div className="text-3xl mb-7">Sign In</div>
             <div className="text-xl mb-9">
               Welcome to <span className="text-green-800">VersionVaultHub</span>
             </div>

@@ -45,7 +45,7 @@ const Sidebar = () => {
     { id: 11, name: "Logout", href: "/logout", icon: <IconLogout color="red" /> }
   ];
 
-  const buttonsClass = `inline-flex text-center items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors py-2 gap-2 text-black hover:font-bold hover:shadow-md hover:bg-error hover:font-bold hover:shadow-lg  hover:bg-[#dcf8d7]`;
+  const buttonsClass = `inline-flex text-center items-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors py-2 gap-2 hover:font-semibold hover:shadow-md hover:bg-primary hover:font-bold hover:shadow-lg  hover:bg-[#dcf8d7]`;
   const buttonSidebarClass = `${isSidebarOpen ? "px-4 justify-start" : "h-8 w-8 justify-center"}`;
 
   const logout = () => {

@@ -47,8 +47,8 @@ const DocumentComponent = () => {
     }
 
     return (
-        <div className="p-2">
-            <div className="flex items-center justify-between mb-8 border-shadow-300 mr-[52px] py-2 px-8 shadow-md shadow-primary">
+        <div className="p-2 mr-[52px]">
+            <div className="flex items-center justify-between mb-8 border-shadow-300 border-[1px] rounded-md mt-4 py-2 px-8">
                 <label className="input input-bordered flex items-center gap-2 mr-2">
                     <input
                         type="text"
@@ -73,33 +73,30 @@ const DocumentComponent = () => {
                 </label>
 
                 <div className='flex justify-items-end'>
-                    <div className="stats w-48 h-24 flex items-center">
-                        <div className="stat">
-                            <div className="stat-title text-blue-700">Total documents</div>
-                            <div className="stat-value text-blue-700">{documents.length}</div>
-                        </div>
-                    </div>
+                    <div className="badge badge-lg">{documents.length}</div>
                     {uploading ? <span className="loading loading-ball loading-md text-accent"></span> : null}
                 </div>
             </div>
-
-            <div className="grid grid-cols-4 gap-4">
-                {filteredDocuments.map((doc, index) => (
-            <div key={index} className="flex items-center justify-between mb-4">
-                <div className='flex items-center'>
-                    <div className="card w-[324px] bg-primary">
-                        <div className="card-body items-center text-center">
-                            <h2 className="card-title">{doc.doc_name}</h2>
-                            <div className="card-actions justify-end">
-                                <button className="btn btn-secondary" onClick={() => onClickHandler(doc.doc_name)}>Open</button>
-                                <button className="btn btn-accent">About</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        ))}
-            </div>
+<div className="overflow-x-auto">
+  <table className="table table-zebra">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Open</th>
+      </tr>
+    </thead>
+ <tbody>
+    {filteredDocuments.map((doc, index) => (
+      <tr>
+        <th>{index+1}</th>
+        <td>{doc.doc_name}</td>
+        <td><button onClick={()=>onClickHandler(doc.doc_name)}>Open</button></td>
+      </tr>
+    ))}
+</tbody>
+  </table>
+</div>
         </div>
     );
 };
